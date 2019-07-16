@@ -4,20 +4,37 @@ import Header from "./components/layout/Header";
 import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo";
 import About from "./components/pages/About";
-// import uuid from "uuid";
+import uuid from "uuid";
 import "./App.css";
-import axios from "axios";
+// import axios from "axios";
 
 class App extends React.Component {
   state = {
-    todos: []
+    todos: [
+      {
+        id: uuid.v4(),
+        title: "Clean the dishes",
+        completed: false
+      },
+      {
+        id: uuid.v4(),
+        title: "Take out trash",
+        completed: false
+      },
+      {
+        id: uuid.v4(),
+        title: "Walk the dog",
+        completed: false
+      }
+    ]
   };
 
-  componentDidMount() {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
-      .then(res => this.setState({ todos: res.data }));
-  }
+  // pull from json placeholder
+  // componentDidMount() {
+  //   axios
+  //     .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+  //     .then(res => this.setState({ todos: res.data }));
+  // }
 
   // Toggle Complete
   markComplete = id => {
@@ -33,21 +50,36 @@ class App extends React.Component {
 
   // Add Todo
   addTodo = title => {
-    axios
-      .post("https://jsonplaceholder.typicode.com/todos", {
-        title,
-        completed: false
-      })
-      .then(res => this.setState({ todos: [...this.state.todos, res.data] }));
+    // issue: can only generate one id from json placeholder
+    // axios
+    //   .post("https://jsonplaceholder.typicode.com/todos", {
+    //     id: uuid.v4(),
+    //     title,
+    //     completed: false
+    //   })
+    //   .then(res => this.setState({ todos: [...this.state.todos, res.data] }));
+
+    const newTodo = {
+      id: uuid.v4(),
+      title,
+      completed: false
+    };
+
+    this.setState({ todos: [...this.state.todos, newTodo] });
   };
 
   // Delete Todo
   delTodo = id => {
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`).then(res =>
-      this.setState({
-        todos: [...this.state.todos.filter(todo => todo.id !== id)]
-      })
-    );
+    // duplicated ids will remove both/all
+    // axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`).then(res =>
+    //   this.setState({
+    //     todos: [...this.state.todos.filter(todo => todo.id !== id)]
+    //   })
+    // );
+
+    this.setState({
+      todos: [...this.state.todos.filter(todo => todo.id !== id)]
+    });
   };
 
   render() {
