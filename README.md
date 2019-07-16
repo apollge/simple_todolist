@@ -1,5 +1,5 @@
 # Simple TodoList app using React
-[Link](https://mighty-anchorage-88245.herokuapp.com/).
+[Link to app](https://mighty-anchorage-88245.herokuapp.com/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
